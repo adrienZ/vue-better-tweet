@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TweetContainer } from './tweet-container.vue'
+import TweetContainer from './tweet-container.vue'
 import styles from './tweet-not-found.module.css'
 
 type Props = {

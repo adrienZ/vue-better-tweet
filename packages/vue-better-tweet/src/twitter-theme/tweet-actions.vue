@@ -2,7 +2,7 @@
 import type { EnrichedTweet } from 'react-tweet'
 import { formatNumber } from 'react-tweet'
 import { computed } from 'vue'
-import { TweetActionsCopy } from './tweet-actions-copy.vue'
+import TweetActionsCopy from './tweet-actions-copy.vue'
 import s from './tweet-actions.module.css'
 
 type Props = {

@@ -5,8 +5,8 @@ import { getMediaUrl } from 'react-tweet'
 import type { MediaDetails } from 'react-tweet/api'
 import clsx from 'clsx'
 import type { TwitterComponents } from './types'
-import { MediaImg } from './media-img.vue'
-import { TweetMediaVideo } from './tweet-media-video.vue'
+import MediaImg from './media-img.vue'
+import TweetMediaVideo from './tweet-media-video.vue'
 import s from './tweet-media.module.css'
 
 type Props = {

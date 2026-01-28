@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { EnrichedTweet } from 'react-tweet'
-import { TweetLink } from './tweet-link.vue'
+import TweetLink from './tweet-link.vue'
 import s from './tweet-body.module.css'
 
 type Props = {

@@ -3,9 +3,9 @@ import { computed } from 'vue'
 import type { EnrichedQuotedTweet } from 'react-tweet'
 import clsx from 'clsx'
 import type { TwitterComponents } from '../types'
-import { AvatarImg } from '../avatar-img.vue'
-import { HighlightedLabel } from '../highlighted-label.vue'
-import { VerifiedBadge } from '../verified-badge.vue'
+import AvatarImg from '../avatar-img.vue'
+import HighlightedLabel from '../highlighted-label.vue'
+import VerifiedBadge from '../verified-badge.vue'
 import s from './quoted-tweet-header.module.css'
 
 type Props = {

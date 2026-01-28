@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { TweetContainer } from './tweet-container.vue'
-import { Skeleton } from './skeleton.vue'
+import TweetContainer from './tweet-container.vue'
+import Skeleton from './skeleton.vue'
 import styles from './tweet-skeleton.module.css'
 </script>
 
