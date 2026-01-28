@@ -5,9 +5,11 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./api": "./src/api.ts"
+    "./api": "./src/api.ts",
+    "./theme.css": "./src/twitter-theme/theme.css"
   },
   "dependencies": {
-    "react-tweet": "^3.3.0"
+    "react-tweet": "^3.3.0",
+    "vue": "^3.4.0"
   }
 }

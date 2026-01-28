@@ -1,3 +1,6 @@
+export * from './twitter-theme/components'
+export { default as Tweet } from './tweet.vue'
+export type { TweetProps } from './tweet.vue'
 export {
   enrichTweet,
   formatDate,
