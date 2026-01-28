@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { EnrichedTweet } from 'react-tweet'
-import type { TwitterComponents } from './types'
-import { AvatarImg } from './avatar-img.vue'
-import { VerifiedBadge } from './verified-badge.vue'
-import { HighlightedLabel } from './highlighted-label.vue'
 import { computed } from 'vue'
-import { cx } from './classnames'
+import type { EnrichedTweet } from 'react-tweet'
+import clsx from 'clsx'
+import type { TwitterComponents } from './types'
+import AvatarImg from './avatar-img.vue'
+import HighlightedLabel from './highlighted-label.vue'
+import VerifiedBadge from './verified-badge.vue'
 import s from './tweet-header.module.css'
 
 type Props = {
@@ -20,7 +20,7 @@ const Img = computed(() => props.components?.AvatarImg ?? AvatarImg)
 <template>
   <div :class="s.header">
     <a :href="props.tweet.url" :class="s.avatar" target="_blank" rel="noopener noreferrer">
-      <div :class="cx(s.avatarOverflow, props.tweet.user.profile_image_shape === 'Square' && s.avatarSquare)">
+      <div :class="clsx(s.avatarOverflow, props.tweet.user.profile_image_shape === 'Square' && s.avatarSquare)">
         <component
           :is="Img"
           :src="props.tweet.user.profile_image_url_https"
@@ -38,7 +38,7 @@ const Img = computed(() => props.components?.AvatarImg ?? AvatarImg)
         <div :class="s.authorLinkText">
           <span :title="props.tweet.user.name">{{ props.tweet.user.name }}</span>
         </div>
-        <VerifiedBadge :user="props.tweet.user" :class-name="s.authorVerified" />
+        <VerifiedBadge :user="props.tweet.user" :class="s.authorVerified" />
         <HighlightedLabel :user="props.tweet.user" />
       </a>
       <div :class="s.authorMeta">

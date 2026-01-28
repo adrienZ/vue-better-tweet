@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import { cx } from './classnames'
+import clsx from 'clsx'
 import s from './tweet-container.module.css'
 import './theme.css'
-
-type Props = {
-  className?: string
-}
-
-defineProps<Props>()
 </script>
 
 <template>
-  <div :class="cx('react-tweet-theme', s.root, className)">
+  <div :class="clsx('react-tweet-theme', s.root)">
     <article :class="s.article">
       <slot />
     </article>
