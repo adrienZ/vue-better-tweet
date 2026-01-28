@@ -16,7 +16,7 @@ const props = defineProps<Props>()
 const playButton = ref(true)
 const isPlaying = ref(false)
 const ended = ref(false)
-const videoRef = useTemplateRef<HTMLVideoElement>('videoRef')
+const videoRef = useTemplateRef('videoRef')
 const mp4Video = computed(() => getMp4Video(props.media))
 const timeoutId = ref<number | undefined>(undefined)
 
