@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { MediaAnimatedGif, MediaVideo } from 'react-tweet/api'
+import { computed, ref, useTemplateRef, watch } from 'vue'
 import type { EnrichedTweet, EnrichedQuotedTweet } from 'react-tweet'
 import { getMediaUrl, getMp4Video } from 'react-tweet'
-import { computed, onBeforeUnmount, ref } from 'vue'
-import { cx } from './classnames'
+import type { MediaAnimatedGif, MediaVideo } from 'react-tweet/api'
+import clsx from 'clsx'
 import mediaStyles from './tweet-media.module.css'
 import s from './tweet-media-video.module.css'
 
@@ -16,9 +16,23 @@ const props = defineProps<Props>()
 const playButton = ref(true)
 const isPlaying = ref(false)
 const ended = ref(false)
-const videoRef = ref<HTMLVideoElement | null>(null)
+const videoRef = useTemplateRef<HTMLVideoElement>('videoRef')
 const mp4Video = computed(() => getMp4Video(props.media))
-let timeoutId: number | undefined
+const timeoutId = ref<number | undefined>(undefined)
+
+const clearTimeoutId = () => {
+  if (timeoutId.value) {
+    window.clearTimeout(timeoutId.value)
+    timeoutId.value = undefined
+  }
+}
+
+watch(timeoutId, (value, _, onCleanup) => {
+  if (!value) return
+  onCleanup(() => {
+    window.clearTimeout(value)
+  })
+})
 
 const handlePlay = (event: Event) => {
   const video = videoRef.value
@@ -41,28 +55,24 @@ const handlePlay = (event: Event) => {
 }
 
 const handlePlayState = () => {
-  if (timeoutId) window.clearTimeout(timeoutId)
+  clearTimeoutId()
   if (!isPlaying.value) isPlaying.value = true
   if (ended.value) ended.value = false
 }
 
 const handlePause = () => {
-  if (timeoutId) window.clearTimeout(timeoutId)
-  timeoutId = window.setTimeout(() => {
+  clearTimeoutId()
+  // When the video is seeked (moved to a different timestamp), it will pause for a moment
+  // before resuming. We don't want to show the message in that case so we wait a bit.
+  timeoutId.value = window.setTimeout(() => {
     if (isPlaying.value) isPlaying.value = false
-    timeoutId = undefined
+    timeoutId.value = undefined
   }, 100)
 }
 
 const handleEnded = () => {
   ended.value = true
 }
-
-onBeforeUnmount(() => {
-  if (timeoutId) {
-    window.clearTimeout(timeoutId)
-  }
-})
 </script>
 
 <template>
@@ -101,13 +111,7 @@ onBeforeUnmount(() => {
     </a>
   </div>
 
-  <a
-    v-if="ended"
-    :href="props.tweet.url"
-    :class="cx(s.anchor, s.viewReplies)"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    View replies
-  </a>
+    <a v-if="ended" :href="props.tweet.url" :class="clsx(s.anchor, s.viewReplies)" target="_blank" rel="noopener noreferrer">
+      View replies
+    </a>
 </template>

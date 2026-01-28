@@ -1,5 +1,9 @@
+<script setup lang="ts">
+import s from './icons.module.css'
+</script>
+
 <template>
-  <svg viewBox="0 0 24 24" aria-label="Verified Government" role="img">
+  <svg viewBox="0 0 24 24" aria-label="Verified Government" role="img" :class="s.verified">
     <g>
       <path
         d="M12 1.75c2.07 0 4.017.808 5.48 2.27 1.46 1.463 2.27 3.41 2.27 5.48 0 2.07-.81 4.018-2.27 5.48-1.464 1.462-3.41 2.27-5.48 2.27-2.07 0-4.018-.808-5.48-2.27C5.058 13.518 4.25 11.57 4.25 9.5c0-2.07.808-4.017 2.27-5.48C7.982 2.558 9.93 1.75 12 1.75m0-1.5C6.34.25 1.75 4.84 1.75 10.5S6.34 20.75 12 20.75s10.25-4.59 10.25-10.25S17.66.25 12 .25z"

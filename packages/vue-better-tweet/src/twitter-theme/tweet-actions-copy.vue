@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { ref, watch } from 'vue'
 import type { EnrichedTweet } from 'react-tweet'
-import { onBeforeUnmount, ref, watch } from 'vue'
 import s from './tweet-actions.module.css'
 
 type Props = {
@@ -9,30 +9,22 @@ type Props = {
 
 const props = defineProps<Props>()
 const copied = ref(false)
-let timeoutId: number | undefined
 
 const handleCopy = () => {
   navigator.clipboard?.writeText(props.tweet.url)
   copied.value = true
 }
 
-watch(copied, (value) => {
-  if (timeoutId) {
-    window.clearTimeout(timeoutId)
-    timeoutId = undefined
-  }
-  if (value) {
-    timeoutId = window.setTimeout(() => {
-      copied.value = false
-      timeoutId = undefined
-    }, 6000)
-  }
-})
+watch(copied, (value, _, onCleanup) => {
+  if (!value) return
 
-onBeforeUnmount(() => {
-  if (timeoutId) {
+  const timeoutId = window.setTimeout(() => {
+    copied.value = false
+  }, 6000)
+
+  onCleanup(() => {
     window.clearTimeout(timeoutId)
-  }
+  })
 })
 </script>
 
