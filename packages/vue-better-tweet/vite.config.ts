@@ -16,6 +16,9 @@ const entries = {
 export default defineConfig({
   plugins: [vue()],
   build: {
+    // Avoid minified JS var collisions in CSS module output when bundled by other tools.
+    minify: false,
+    sourcemap: true,
     outDir: 'dist',
     cssCodeSplit: true,
     lib: {
@@ -24,7 +27,7 @@ export default defineConfig({
       name: 'vue-better-tweet',
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', 'react-tweet', 'swrv', 'clsx'],
       output: {
         preserveModules: true,
         preserveModulesRoot: 'src',
