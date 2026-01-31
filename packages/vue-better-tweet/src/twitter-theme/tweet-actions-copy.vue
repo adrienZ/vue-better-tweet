@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import type { EnrichedTweet } from 'react-tweet'
+import type { EnrichedTweet } from '@/index'
 import s from './tweet-actions.module.css'
 
 type Props = {

@@ -10,6 +10,8 @@ import { Tweet as ClientTweet } from 'vue-better-tweet'
       <NuxtLink to="/dark/1628832338187636740">Dark demo</NuxtLink>
       <span class="divider">•</span>
       <NuxtLink to="/light/1628832338187636740">Light demo</NuxtLink>
+      <span class="divider">•</span>
+      <NuxtLink to="/light/kv/1628832338187636740">KV demo</NuxtLink>
     </p>
 
     <div class="tweet-grid">

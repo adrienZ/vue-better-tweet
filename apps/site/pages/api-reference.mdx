@@ -13,7 +13,7 @@ function getTweet(
 ): Promise<Tweet | undefined>
 ```
 
-Fetches and returns a [`Tweet`](https://github.com/vercel/react-tweet/blob/main/packages/react-tweet/src/api/types/tweet.ts). It accepts the following params:
+Fetches and returns a [`Tweet`](https://github.com/adrienZ/vue-better-tweet/blob/main/packages/vue-better-tweet/src/api/types/tweet.ts). It accepts the following params:
 
 - **id** - `string`: the tweet ID. For example in `https://twitter.com/chibicode/status/1629307668568633344` the tweet ID is `1629307668568633344`.
 - **fetchOptions** - `RequestInit` (Optional): options to pass to [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/fetch).
@@ -33,7 +33,7 @@ function fetchTweet(
 }>
 ```
 
-Fetches and returns a [`Tweet`](https://github.com/vercel/react-tweet/blob/main/packages/react-tweet/src/api/types/tweet.ts) just like [`getTweet`](#gettweet), but it also returns additional information about the tweet:
+Fetches and returns a [`Tweet`](https://github.com/adrienZ/vue-better-tweet/blob/main/packages/vue-better-tweet/src/api/types/tweet.ts) just like [`getTweet`](#gettweet), but it also returns additional information about the tweet:
 
 - **data** - `Tweet` (Optional): The tweet data.
 - **tombstone** - `true` (Optional): Indicates if the tweet has been made private.
@@ -47,9 +47,9 @@ import { enrichTweet, type EnrichedTweet } from 'vue-better-tweet'
 const enrichTweet: (tweet: Tweet) => EnrichedTweet
 ```
 
-Enriches a [`Tweet`](https://github.com/vercel/react-tweet/blob/main/packages/react-tweet/src/api/types/tweet.ts) as returned by [`getTweet`](#gettweet) with additional data. This is useful to more easily build custom tweet components.
+Enriches a [`Tweet`](https://github.com/adrienZ/vue-better-tweet/blob/main/packages/vue-better-tweet/src/api/types/tweet.ts) as returned by [`getTweet`](#gettweet) with additional data. This is useful to more easily build custom tweet components.
 
-It returns an [`EnrichedTweet`](https://github.com/vercel/react-tweet/blob/main/packages/react-tweet/src/utils.ts).
+It returns an [`EnrichedTweet`](https://github.com/adrienZ/vue-better-tweet/blob/main/packages/vue-better-tweet/src/utils.ts).
 
 ## `useTweet`
 

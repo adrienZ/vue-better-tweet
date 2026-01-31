@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { EnrichedTweet } from 'react-tweet'
+import type { EnrichedTweet } from '@/index'
 import { computed } from 'vue'
-import { formatDate } from 'react-tweet'
+import { formatDate } from '@/index'
 import s from './tweet-info-created-at.module.css'
 
 type Props = {

@@ -69,55 +69,66 @@ Rendering tweets requires making a call to Twitter's syndication API. Getting ra
 
 To prevent this, you can use a db like Redis or [Vercel KV](https://vercel.com/docs/storage/vercel-kv) to cache the tweets. For example using [Vercel KV](https://vercel.com/docs/storage/vercel-kv):
 
-```tsx
-import { Suspense } from 'vue'
-import { TweetSkeleton, EmbeddedTweet, TweetNotFound } from 'vue-better-tweet'
-import { fetchTweet, Tweet } from 'vue-better-tweet/api'
-import { kv } from '@vercel/kv'
+```ts filename="server/api/tweet/[id].ts"
+import { fetchTweet, type Tweet } from 'vue-better-tweet/api'
 
-async function getTweet(
-  id: string,
-  fetchOptions?: RequestInit
-): Promise<Tweet | undefined> {
+export default defineEventHandler(async (event) => {
+  const id = getRouterParam(event, 'id')
+
+  if (!id) {
+    throw createError({ statusCode: 400, statusMessage: 'Missing tweet id' })
+  }
+
+  const storage = useStorage<Tweet>("data")
+  const cacheKey = `tweet:${id}`
+
+  const cachedTweet = await storage.getItem(cacheKey)
+  if (cachedTweet) return cachedTweet
+
   try {
-    const { data, tombstone, notFound } = await fetchTweet(id, fetchOptions)
+    const { data, tombstone, notFound } = await fetchTweet(id)
 
     if (data) {
-      await kv.set(`tweet:${id}`, data)
+      await storage.setItem(cacheKey, data)
       return data
-    } else if (tombstone || notFound) {
-      // remove the tweet from the cache if it has been made private by the author (tombstone)
-      // or if it no longer exists.
-      await kv.del(`tweet:${id}`)
+    }
+
+    if (tombstone || notFound) {
+      await storage.removeItem(cacheKey)
+      throw createError({ statusCode: 404, statusMessage: 'Tweet not found' })
     }
   } catch (error) {
     console.error('fetching the tweet failed with:', error)
   }
 
-  const cachedTweet = await kv.get<Tweet>(`tweet:${id}`)
-  return cachedTweet ?? undefined
-}
-
-const TweetPage = async ({ id }: { id: string }) => {
-  try {
-    const tweet = await getTweet(id)
-    return tweet ? <EmbeddedTweet tweet={tweet} /> : <TweetNotFound />
-  } catch (error) {
-    console.error(error)
-    return <TweetNotFound error={error} />
-  }
-}
-
-const Page = ({ params }: { params: { tweet: string } }) => (
-  <Suspense fallback={<TweetSkeleton />}>
-    <TweetPage id={params.tweet} />
-  </Suspense>
-)
-
-export default Page
+  throw createError({ statusCode: 404, statusMessage: 'Tweet not found' })
+})
 ```
 
-{/* TODO: next to nuxt cache demo */}
-You can see it working at [react-tweet-next.vercel.app/light/vercel-kv/1629307668568633344](https://react-tweet-next.vercel.app/light/vercel-kv/1629307668568633344) ([source](https://github.com/vercel/react-tweet/blob/main/apps/next-app/app/light/vercel-kv/%5Btweet%5D/page.tsx)).
+```vue filename="app/pages/kv-tweet/[id].vue"
+<script setup lang="ts">
+import { computed } from 'vue'
+import { EmbeddedTweet, TweetNotFound } from 'vue-better-tweet'
 
-If you're using Next.js then using [`unstable_cache`](/next#enabling-cache) works too.
+const route = useRoute()
+
+const tweetId = computed(() => {
+  const value = route.params.tweet
+  return Array.isArray(value) ? value[0] : value
+})
+
+const { data, error } = await useAsyncData(
+  () => `tweet-${tweetId.value}`,
+  () => $fetch(`/api/tweet/${tweetId.value}`)
+)
+</script>
+
+<template>
+  <TweetPage theme="light">
+    <TweetNotFound v-if="error || !data" :error="error" />
+    <EmbeddedTweet v-else :tweet="data" />
+  </TweetPage>
+</template>
+```
+
+You can see it working at [vue-better-tweet-next.vercel.app/light/kv/1629307668568633344](https://vue-better-tweet-nuxt-app.vercel.app/light/kv/1629307668568633344) ([source](https://github.com/adrienZ/vue-better-tweet/blob/main/apps/nuxt-app/server/api/tweet/%id%5D.ts)).

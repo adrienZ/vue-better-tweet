@@ -22,7 +22,7 @@ import {
   TweetSkeleton,
   type TwitterComponents,
 } from "./twitter-theme/components";
-import type { TweetCoreProps } from "react-tweet";
+import type { TweetCoreProps } from "@/index";
 import { useTweet } from "./hooks";
 
 const props = defineProps<TweetProps>();

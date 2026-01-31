@@ -8,13 +8,18 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const entries = {
   index: resolve(__dirname, 'src/index.ts'),
   "index.client": resolve(__dirname, 'src/index.client.ts'),
-  api: resolve(__dirname, 'src/api.ts'),
+  api: resolve(__dirname, 'src/api/index.ts'),
   swr: resolve(__dirname, 'src/swr.vue'),
   'twitter-theme/theme': resolve(__dirname, 'src/twitter-theme/theme.css')
 }
 
 export default defineConfig({
   plugins: [vue()],
+  resolve: {
+    alias: {
+      "@": resolve(__dirname, "./src"),
+    }
+  },
   build: {
     // Avoid minified JS var collisions in CSS module output when bundled by other tools.
     minify: false,
@@ -27,7 +32,7 @@ export default defineConfig({
       name: 'vue-better-tweet',
     },
     rollupOptions: {
-      external: ['vue', 'react-tweet', 'swrv', 'clsx'],
+      external: ['vue', 'swrv', 'clsx'],
       output: {
         preserveModules: true,
         preserveModulesRoot: 'src',

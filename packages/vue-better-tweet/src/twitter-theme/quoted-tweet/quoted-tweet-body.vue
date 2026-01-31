@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { EnrichedQuotedTweet } from 'react-tweet'
+import type { EnrichedQuotedTweet } from '@/index'
 import s from './quoted-tweet-body.module.css'
 
 type Props = {

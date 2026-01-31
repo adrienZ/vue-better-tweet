@@ -67,7 +67,6 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "react-tweet": "^3.3.0",
     "swrv": "^1.1.0",
     "vue": "^3.4.0"
   },

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, useTemplateRef, watch } from 'vue'
-import type { EnrichedTweet, EnrichedQuotedTweet } from 'react-tweet'
-import { getMediaUrl, getMp4Video } from 'react-tweet'
-import type { MediaAnimatedGif, MediaVideo } from 'react-tweet/api'
+import type { EnrichedTweet, EnrichedQuotedTweet } from '@/index'
+import { getMediaUrl, getMp4Video } from '@/index'
+import type { MediaAnimatedGif, MediaVideo } from '@/api'
 import clsx from 'clsx'
 import mediaStyles from './tweet-media.module.css'
 import s from './tweet-media-video.module.css'
