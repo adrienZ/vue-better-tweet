@@ -49,8 +49,8 @@ Then, you can build your own `Tweet` component that uses the `MyTweet` component
 
 ```tsx filename="tweet.tsx" copy
 import { Suspense } from 'react'
-import { getTweet } from 'react-tweet/api'
-import { type TweetProps, TweetNotFound, TweetSkeleton } from 'react-tweet'
+import { getTweet } from 'vue-better-tweet/api'
+import { type TweetProps, TweetNotFound, TweetSkeleton } from 'vue-better-tweet'
 import { MyTweet } from './my-tweet'
 
 const TweetContent = async ({ id, components, onError }: TweetProps) => {
@@ -96,7 +96,7 @@ import {
   TweetNotFound,
   TweetSkeleton,
   useTweet,
-} from 'react-tweet'
+} from 'vue-better-tweet'
 
 export const Tweet = ({
   id,

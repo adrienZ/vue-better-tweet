@@ -3,7 +3,7 @@
 ### `Tweet`
 
 ```tsx copy
-import { Tweet } from 'react-tweet'
+import { Tweet } from 'vue-better-tweet'
 ```
 
 ```tsx copy
@@ -13,13 +13,13 @@ import { Tweet } from 'react-tweet'
 Fetches and renders the tweet. It accepts the following props:
 
 - **id** - `string`: the tweet ID. For example in `https://twitter.com/chibicode/status/1629307668568633344` the tweet ID is `1629307668568633344`. This is the only required prop.
-- **apiUrl** - `string`: the API URL to fetch the tweet from when using the tweet client-side with SWR. Defaults to `https://react-tweet.vercel.app/api/tweet/:id`.
+- **apiUrl** - `string`: the API URL to fetch the tweet from when using the tweet client-side with SWR. Defaults to `https://vue-better-tweet.vercel.app/api/tweet/:id`.
 - **fallback** - `ReactNode`: The fallback component to render while the tweet is loading. Defaults to `TweetSkeleton`.
 - **onError** - `(error?: any) => any`: The returned error will be sent to the `TweetNotFound` component.
 - **components** - `TwitterComponents`: Components to replace the default tweet components. See the [custom tweet components](#custom-tweet-components) section for more details.
 - **fetchOptions** - `RequestInit`: options to pass to [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/fetch).
 
-If the environment where `Tweet` is used does not support React Server Components then it will work with [SWR](https://swr.vercel.app/) instead and the tweet will be fetched from `https://react-tweet.vercel.app/api/tweet/:id`, which is CORS friendly.
+If the environment where `Tweet` is used does not support React Server Components then it will work with [SWR](https://swr.vercel.app/) instead and the tweet will be fetched from `https://vue-better-tweet.vercel.app/api/tweet/:id`, which is CORS friendly.
 
 We highly recommend adding your own API route to fetch the tweet in production (as we cannot guarantee our IP will not get limited). You can do it by using the `apiUrl` prop:
 
@@ -33,7 +33,7 @@ Here's a good example of how to setup your own API route:
 
 ```ts filename="api/tweet/[tweet].ts" copy
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { getTweet } from 'react-tweet/api'
+import { getTweet } from 'vue-better-tweet/api'
 
 const handler = async (req: VercelRequest, res: VercelResponse) => {
   const tweetId = req.query.tweet
@@ -60,7 +60,7 @@ Something similar can be done with Next.js API Routes or Route Handlers.
 ### `EmbeddedTweet`
 
 ```tsx copy
-import { EmbeddedTweet } from 'react-tweet'
+import { EmbeddedTweet } from 'vue-better-tweet'
 ```
 
 Renders a tweet. It accepts the following props:
@@ -71,7 +71,7 @@ Renders a tweet. It accepts the following props:
 ### `TweetSkeleton`
 
 ```tsx copy
-import { TweetSkeleton } from 'react-tweet'
+import { TweetSkeleton } from 'vue-better-tweet'
 ```
 
 A tweet skeleton useful for loading states.
@@ -79,7 +79,7 @@ A tweet skeleton useful for loading states.
 ### `TweetNotFound`
 
 ```tsx copy
-import { TweetNotFound } from 'react-tweet'
+import { TweetNotFound } from 'vue-better-tweet'
 ```
 
 A tweet not found component. It accepts the following props:
@@ -88,7 +88,7 @@ A tweet not found component. It accepts the following props:
 
 ## Custom tweet components
 
-Default components used by [`Tweet`](#tweet) and [`EmbeddedTweet`](#embeddedtweet) can be replaced by passing a `components` prop. It extends the `TwitterComponents` type exported from `react-tweet`:
+Default components used by [`Tweet`](#tweet) and [`EmbeddedTweet`](#embeddedtweet) can be replaced by passing a `components` prop. It extends the `TwitterComponents` type exported from `vue-better-tweet`:
 
 ```ts copy
 type TwitterComponents = {

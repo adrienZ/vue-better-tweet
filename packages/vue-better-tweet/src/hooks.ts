@@ -2,6 +2,7 @@ import { type MaybeRef, computed, onMounted, shallowRef, toValue } from 'vue'
 import useSWR from 'swrv';
 import { type Tweet, TwitterApiError } from 'react-tweet/api'
 
+// keep react link because vercel should have a better server than me :p
 const host = 'https://react-tweet.vercel.app'
 
 async function fetcher([url, fetchOptions]: [
