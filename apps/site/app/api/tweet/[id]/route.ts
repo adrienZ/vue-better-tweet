@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { getTweet } from 'react-tweet/api'
+import { getTweet } from 'vue-better-tweet/api'
 import cors from 'edge-cors'
 
 export const fetchCache = 'only-cache'

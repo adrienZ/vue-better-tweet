@@ -2,9 +2,7 @@
   "name": "site",
   "private": true,
   "license": "MIT",
-  "repository": "https://github.com/vercel/react-tweet.git",
-  "author": "Luis Alvarez (https://twitter.com/luis_fades)",
-  "description": "Official site and documentation for react-tweet",
+  "description": "Official site and documentation for vue-better-tweet",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -17,7 +15,7 @@
     "nextra-theme-docs": "^2.13.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-tweet": "^3.3.0"
+    "vue-better-tweet": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "20.10.5",

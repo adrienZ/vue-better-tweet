@@ -5,7 +5,7 @@ import './theme.css'
 </script>
 
 <template>
-  <div :class="clsx('react-tweet-theme', s.root)">
+  <div :class="clsx('vue-better-tweet-theme', s.root)">
     <article :class="s.article">
       <slot />
     </article>
