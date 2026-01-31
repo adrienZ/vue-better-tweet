@@ -14,7 +14,7 @@ import './base.css'
 
 const styles = useCssModule()
 
-const rootClass = computed(() => clsx(styles.root, 'react-tweet-theme'))
+const rootClass = computed(() => clsx(styles.root, 'vue-better-tweet-theme'))
 </script>
 
 <style module src="./layout.module.css"></style>

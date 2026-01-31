@@ -1,11 +1,11 @@
 # API Reference
 
-This is the reference for the utility functions that `react-tweet` provides for [building your own tweet components](/custom-theme) or simply fetching a tweet. Navigate to the docs for the [Twitter theme](/twitter-theme) if you want to render the existing Tweet components instead.
+This is the reference for the utility functions that `vue-better-tweet` provides for [building your own tweet components](/custom-theme) or simply fetching a tweet. Navigate to the docs for the [Twitter theme](/twitter-theme) if you want to render the existing Tweet components instead.
 
 ## `getTweet`
 
 ```tsx
-import { getTweet, type Tweet } from 'react-tweet/api'
+import { getTweet, type Tweet } from 'vue-better-tweet/api'
 
 function getTweet(
   id: string,
@@ -42,7 +42,7 @@ Fetches and returns a [`Tweet`](https://github.com/vercel/react-tweet/blob/main/
 ## `enrichTweet`
 
 ```tsx
-import { enrichTweet, type EnrichedTweet } from 'react-tweet'
+import { enrichTweet, type EnrichedTweet } from 'vue-better-tweet'
 
 const enrichTweet: (tweet: Tweet) => EnrichedTweet
 ```
@@ -53,10 +53,10 @@ It returns an [`EnrichedTweet`](https://github.com/vercel/react-tweet/blob/main/
 
 ## `useTweet`
 
-> If your app supports React Server Components, use [`getTweet`](#gettweet) instead.
+> If your app supports Nuxt Server Components, use [`getTweet`](#gettweet) instead.
 
 ```tsx
-import { useTweet } from 'react-tweet'
+import { useTweet } from 'vue-better-tweet'
 
 const useTweet: (
   id?: string,

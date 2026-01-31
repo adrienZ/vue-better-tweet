@@ -18,9 +18,9 @@
     "title": "More"
   },
   "contributing": "",
-  "next.js-link": {
-    "title": "Next.js Docs ↗",
-    "href": "https://nextjs.org?utm_source=vue-better-tweet.site&utm_medium=referral&utm_campaign=sidebar",
+  "react-tweet.js-link": {
+    "title": "react-tweet Docs ↗",
+    "href": "https://react-tweet.vercel.app?utm_source=vue-better-tweet.site&utm_medium=referral&utm_campaign=sidebar",
     "newWindow": true
   }
 }

@@ -6,29 +6,33 @@ Follow the [installation docs in the Introduction](/#installation).
 
 ## Usage
 
-In any component, import `Tweet` from `react-tweet` and use it like so:
+In any component, import `Tweet` from `vue-better-tweet` and use it like so:
 
-```tsx copy
+```vue copy
+<script setup lang="ts">
 import { Tweet } from 'vue-better-tweet'
+</script>
 
-export const IndexPage = () => <Tweet id="1628832338187636740" />
+<template>
+  <Tweet id="1628832338187636740" />
+</template>
 ```
 
 You can learn more about `Tweet` in the [Twitter theme docs](/twitter-theme).
 
 ## Running the test app
 
-Clone the [`react-tweet`](https://github.com/vercel/react-tweet) repository and then run the following command:
+Clone the [`vue-better-tweet`](https://github.com/adrienZ/vue-better-tweett) repository and then run the following command:
 
 ```bash copy
 pnpm install && pnpm dev --filter=vite-app...
 ```
 
-The app will be up and running at http://localhost:5173 for the [Vite app example](https://github.com/vercel/react-tweet/tree/main/apps/vite-app).
+The app will be up and running at http://localhost:5173 for the [Vite app example](https://github.com/adrienZ/vue-better-tweet/tree/main/apps/vite-app).
 
-The app shows the usage of `react-tweet` in different scenarios:
+The app shows the usage of `vue-better-tweet` in different scenarios:
 
 - [localhost:5173/](http://localhost:5173) renders a single tweet.
 - [localhost:5173/tweet/1629307668568633344](http://localhost:5173/tweet/1629307668568633344) renders dynamic tweets with SWR. `Tweet` already uses SWR and this page shows how to implement it manually.
 
-The source code for `react-tweet` is imported from [packages/react-tweet](https://github.com/vercel/react-tweet/tree/main/packages/react-tweet) and any changes you make to it will be reflected in the app immediately.
+The source code for `vue-better-tweet` is imported from [packages/vue-better-tweet](https://github.com/adrienZ/vue-better-tweet/tree/main/packages/vue-better-tweet) and any changes you make to it will be reflected in the app immediately.
