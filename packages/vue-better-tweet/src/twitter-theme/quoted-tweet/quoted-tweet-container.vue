@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { EnrichedQuotedTweet } from '@/index'
+import type { EnrichedQuotedTweet } from '../../utils.js'
 import s from './quoted-tweet-container.module.css'
 
 type Props = {

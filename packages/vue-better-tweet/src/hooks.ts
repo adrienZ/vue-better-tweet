@@ -1,6 +1,6 @@
 import { type MaybeRef, computed, onMounted, shallowRef, toValue } from 'vue'
 import useSWR from 'swrv';
-import { type Tweet, TwitterApiError } from './api'
+import { type Tweet, TwitterApiError } from './api/index.js'
 
 const host = 'https://vue-better-tweet.vercel.app'
 

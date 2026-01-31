@@ -1,9 +1,9 @@
-import type { TweetEditControl } from './edit.ts'
-import type { Indices, TweetEntities } from './entities.ts'
-import type { MediaDetails } from './media.ts'
-import type { TweetPhoto } from './photo.ts'
-import type { TweetUser } from './user.ts'
-import type { TweetVideo } from './video.ts'
+import type { TweetEditControl } from './edit.js'
+import type { Indices, TweetEntities } from './entities.js'
+import type { MediaDetails } from './media.js'
+import type { TweetPhoto } from './photo.js'
+import type { TweetUser } from './user.js'
+import type { TweetVideo } from './video.js'
 
 /**
  * Base tweet information shared by a tweet, a parent tweet and a quoted tweet.

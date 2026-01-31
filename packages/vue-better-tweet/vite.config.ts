@@ -15,11 +15,6 @@ const entries = {
 
 export default defineConfig({
   plugins: [vue()],
-  resolve: {
-    alias: {
-      "@": resolve(__dirname, "./src"),
-    }
-  },
   build: {
     // Avoid minified JS var collisions in CSS module output when bundled by other tools.
     minify: false,

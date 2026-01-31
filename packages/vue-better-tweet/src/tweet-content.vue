@@ -1,6 +1,6 @@
 <script setup lang="ts" async>
 import { computed, shallowRef } from 'vue'
-import { getTweet } from '@/api'
+import { getTweet } from './api/index.js'
 import {
   EmbeddedTweet,
   TweetNotFound,

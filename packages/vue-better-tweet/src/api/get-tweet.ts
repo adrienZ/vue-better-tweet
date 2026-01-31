@@ -1,5 +1,5 @@
-import { fetchTweet } from './fetch-tweet.ts'
-import type { Tweet } from './types/index.ts'
+import { fetchTweet } from './fetch-tweet.js'
+import type { Tweet } from './types/index.js'
 
 /**
  * Returns a tweet from the Twitter syndication API.

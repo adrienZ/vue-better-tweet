@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { EnrichedTweet } from '@/index'
+import type { EnrichedTweet } from '../utils.js'
 import s from './tweet-in-reply-to.module.css'
 
 type Props = {

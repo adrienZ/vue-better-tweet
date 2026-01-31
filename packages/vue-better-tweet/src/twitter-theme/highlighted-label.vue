@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { TweetUser } from '@/api'
+import type { TweetUser } from '../api/index.js'
 import clsx from 'clsx'
 import styles from './highlighted-label.module.css'
 

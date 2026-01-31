@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { EnrichedTweet } from '@/index'
+import type { EnrichedTweet } from '../utils.js'
 import TweetLink from './tweet-link.vue'
 import s from './tweet-body.module.css'
 

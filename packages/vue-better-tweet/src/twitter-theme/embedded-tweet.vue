@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Tweet } from '@/api'
+import type { Tweet } from '../api/index.js'
 import type { TwitterComponents } from './types'
 import { computed } from 'vue'
 import TweetContainer from './tweet-container.vue'
@@ -10,8 +10,8 @@ import TweetMedia from './tweet-media.vue'
 import TweetInfo from './tweet-info.vue'
 import TweetActions from './tweet-actions.vue'
 import TweetReplies from './tweet-replies.vue'
-import { QuotedTweet } from './quoted-tweet'
-import { enrichTweet } from '@/index'
+import { QuotedTweet } from './quoted-tweet/index.js'
+import { enrichTweet } from '../utils.js'
 
 type Props = {
   tweet: Tweet

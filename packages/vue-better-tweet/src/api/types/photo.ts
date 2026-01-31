@@ -1,4 +1,4 @@
-import type { Rect, RGB } from './media.ts'
+import type { Rect, RGB } from './media.js'
 
 export interface TweetPhoto {
   backgroundColor: RGB
