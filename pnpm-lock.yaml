@@ -100,6 +100,9 @@ importers:
 
   apps/nuxt-app:
     dependencies:
+      '@nuxt/content':
+        specifier: 3.11.0
+        version: 3.11.0(magicast@0.5.1)
       '@nuxt/image':
         specifier: 2.0.0
         version: 2.0.0(@upstash/redis@1.36.1)(@vercel/kv@3.0.0)(db0@0.3.4)(ioredis@5.9.2)(magicast@0.5.1)
@@ -17267,7 +17270,7 @@ snapshots:
     dependencies:
       '@types/unist': 3.0.3
       unist-util-is: 6.0.0
-      unist-util-visit-parents: 6.0.1
+      unist-util-visit-parents: 6.0.2
 
   universalify@0.1.2: {}
 

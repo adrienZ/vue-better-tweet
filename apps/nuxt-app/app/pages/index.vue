@@ -16,6 +16,8 @@ import { Tweet as ClientTweet } from 'vue-better-tweet'
       <NuxtLink to="/light/kv/1990838999095693399">KV demo</NuxtLink>
       <span class="divider">•</span>
       <NuxtLink to="/light/cache/1990838999095693399">cache demo</NuxtLink>
+      <span class="divider">•</span>
+      <NuxtLink to="/light/mdx">MDX demo</NuxtLink>
     </p>
 
     <div class="tweet-grid">
