@@ -13,6 +13,14 @@ node_modules
 out
 next-env.d.ts
 
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
 # Production
 build
 dist
