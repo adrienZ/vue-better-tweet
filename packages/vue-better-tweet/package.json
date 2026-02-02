@@ -25,7 +25,6 @@
     ".": "./dist/index.client.js",
     "./server": "./dist/index.js",
     "./api": "./dist/api.js",
-    "./swr": "./dist/swr.js",
     "./theme.css": "./dist/twitter-theme/theme.css"
   },
   "files": [
@@ -82,6 +81,7 @@
     "swr": "^2.3.8",
     "typescript": "^5.9.3",
     "vite": "^7.1.6",
+    "vite-plugin-lib-inject-css": "^2.2.2",
     "vue-tsc": "^3.2.4"
   }
 }
