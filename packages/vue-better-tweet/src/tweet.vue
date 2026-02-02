@@ -9,7 +9,6 @@ export type { TweetProps };
 import TweetContent from './tweet-content.vue'
 import { TweetSkeleton } from './twitter-theme/components.ts'
 
-
 const props = defineProps<TweetProps>()
 </script>
 

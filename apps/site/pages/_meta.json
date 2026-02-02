@@ -4,7 +4,7 @@
     "type": "separator",
     "title": "Usage"
   },
-  "next": "Next.js",
+  "nuxt": "Nuxt",
   "vite": "Vite",
   "api-reference": "",
   "-- Themes": {

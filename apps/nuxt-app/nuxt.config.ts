@@ -9,4 +9,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vue-better-tweet'],
   },
+  devServer: {
+    port: 3001,
+  }, 
 })

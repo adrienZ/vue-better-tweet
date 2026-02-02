@@ -1,0 +1,180 @@
+# Nuxt
+
+## Installation
+
+Follow the [installation docs in the Introduction](/#installation).
+
+## Usage
+
+In any component, import `Tweet` from `vue-better-tweet` and use it like so:
+
+```vue copy
+<script setup lang="ts">
+import { Tweet } from 'vue-better-tweet'
+</script>
+
+<template>
+  <Tweet id="1628832338187636740" />
+</template>
+```
+
+`Tweet` works differently depending on where it's used. If it's used in Nuxt on the server it will fetch the tweet in the server. If it's used in the client it will fetch the tweet in the client with [SWRV](https://docs-swrv.netlify.app/).
+
+You can learn more about `Tweet` in the [Twitter theme docs](/twitter-theme). And you can learn more about the usage in [Running the test app](#running-the-test-app).
+
+### Troubleshooting
+
+If you see an error saying that CSS can't be imported from `node_modules` in the `pages` directory. Add the following config to `nuxt.config.js`:
+
+```js copy
+build: {
+  transpile: ['vue-better-tweet'],
+},
+```
+
+### Enabling cache
+
+It's recommended to enable cache for the Twitter API if you intend to go to production. This is how you can do it with [`defineCachedFunction`](https://nitro.build/guide/cache#cached-functions):
+
+```vue
+<script setup lang="ts">
+import { defineCachedFunction } from 'nitro/cache'
+import { getTweet as _getTweet } from 'vue-better-tweet/api'
+
+const route = useRoute()
+const id = String(route.params.tweet)
+
+const getTweet = import.meta.server
+  ? defineCachedFunction(
+      async (id: string) => {
+        return await _getTweet(id)
+      },
+      {
+        name: 'tweet',
+        maxAge: 3600 * 24
+        getKey: (id: string) => id,
+      }
+    )
+  : (async () => null) // client side fallback
+
+const { data: tweet, error, pending } = await useAsyncData(
+  `tweet-${id}`,
+  () => getTweet(id),
+  { server: true }
+)
+</script>
+
+<template>
+  <div>
+    <TweetSkeleton v-if="pending" />
+    <TweetNotFound v-else-if="error || !tweet" />
+    <EmbeddedTweet v-else :tweet="tweet" />
+  </div>
+</template>
+```
+
+This can prevent getting your server IPs rate limited if they are making too many requests to the Twitter API.
+
+## Advanced usage
+
+### Manual data fetching
+
+You can use the [`getTweet`](/api-reference#gettweet) function from `vue-better-tweet/api` to fetch the tweet manually. This is useful for SSG pages and for other [Nuxt data fetching methods](https://nuxt.com/docs/4.x/getting-started/data-fetching) in the `pages` directory.
+
+For example, using `useAsyncData` in `pages/tweed/[tweetId].vue` to fetch the tweet and send it as props to the page component:
+
+```vue copy
+<script setup lang="ts">
+import { getTweet, type Tweet } from 'vue-better-tweet/api'
+import { EmbeddedTweet, TweetSkeleton } from 'vue-better-tweet'
+
+const route = useRoute()
+const tweetId = route.params.tweet as string
+
+const { data: tweet, pending, error } = await useAsyncData<Tweet | null>(
+  `tweet:${tweetId}`,
+  () => getTweet(tweetId),
+  {
+    server: true, // runs on server during SSR/SSG
+  }
+)
+
+if (error.value || !tweet.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Tweet not found' })
+}
+</script>
+
+<template>
+  <TweetSkeleton v-if="pending" />
+  <EmbeddedTweet v-else :tweet="tweet!" />
+</template>
+```
+
+### Adding `@nuxt/image`
+
+Add the domain URLs from Twitter to [`image.domain`](hhttps://image.nuxt.com/get-started/configuration#domains) in `nuxt.config.ts`:
+
+```js copy
+image: {
+  domains: ['pbs.twimg.com', 'abs.twimg.com']
+},
+```
+
+In `tweet-components.ts` or elsewhere, import the `NuxtImage` component from `@nuxt/image` and use it to define custom image components for the tweet:
+
+```ts copy
+import NuxtImage from '#components'
+import type { TwitterComponents } from 'vue-better-tweet'
+import { defineComponent, h } from 'vue'
+
+export const components: TwitterComponents = {
+  AvatarImg: defineComponent({
+    inheritAttrs: false,
+    setup(_, { attrs }) {
+      return () => h(NuxtImg, attrs)
+    },
+  }),
+  MediaImg: defineComponent({
+    inheritAttrs: false,
+    setup(_, { attrs }) {
+      return () => h(NuxtImg, { ...attrs, sizes: '100vw' })
+    },
+  }),
+}
+```
+
+Then pass the `components` prop to `Tweet`:
+
+```vue copy
+<script setup lang="ts">
+import { Tweet } from 'vue-better-tweet'
+import { components } from './tweet-components'
+</script>
+
+
+<template>
+  <Tweet id="1628832338187636740" :components="components" />
+</template>
+```
+
+## Running the test app
+
+Clone the [`vue-better-tweet`](https://github.com/adrienZ/vue-better-tweet) repository and then run the following command:
+
+```bash copy
+pnpm install && pnpm dev --filter=nuxt-app...
+```
+
+The app will be up and running at http://localhost:3001 for the [Nuxt app example](https://github.com/adrienZ/vue-better-tweet/tree/main/apps/nuxt-app).
+
+The app shows the usage of `vue-better-tweet` in different scenarios:
+
+- [localhost:3001/light/1629307668568633344](http://localhost:3001/light/1629307668568633344) renders the tweet in the app router.
+- [localhost:3001/dark/1629307668568633344](http://localhost:3001/dark/1629307668568633344) renders the tweet using SSG in the pages directory.
+- [localhost:3001/light/mdx](http://localhost:3001/light/mdx) rendes the tweet in MDX (with the experimental `mdxRs` config enabled).
+- [localhost:3001/light/suspense/1629307668568633344](http://localhost:3001/light/suspense/1629307668568633344) renders the tweet with a custom `Suspense` wrapper.
+- [localhost:3001/dark/swr/1629307668568633344](http://localhost:3001/dark/swr/1629307668568633344) uses `apiUrl` to change the API endpoint from which the tweet is fetched in SWR mode.
+- [localhost:3001/light/cache/1629307668568633344](http://localhost:3001/light/suspense/1629307668568633344) renders the tweet while caching the tweet data with [`unstable_cache`](https://nextjs.org/docs/app/api-reference/functions/unstable_cache).
+- [localhost:3001/light/vercel-kv/1629307668568633344](http://localhost:3001/light/suspense/1629307668568633344) renders the tweet while caching the tweet data with [Vercel KV](https://vercel.com/docs/storage/vercel-kv).
+
+The source code for `vue-better-tweet` is imported from [packages/vue-better-tweet](https://github.com/adrienZ/vue-better-tweet/tree/main/packages/vue-better-tweet) and any changes you make to it will be reflected in the app immediately.
