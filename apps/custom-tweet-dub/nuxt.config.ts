@@ -18,4 +18,7 @@ export default defineNuxtConfig({
   content: {
     experimental: { sqliteConnector: 'native' },
   },
+  build: {
+    transpile: ['vue-better-tweet'],
+  },
 })

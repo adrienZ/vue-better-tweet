@@ -83,12 +83,12 @@ const tweet = useTweet(null, id && `/api/tweet/${id}`)
 
 It's likely you'll never use this hook directly, and `apiUrl` is passed as a prop to a component instead:
 
-```tsx copy
-<Tweet apiUrl={id && `/api/tweet/${id}`} />
+```vue copy
+<Tweet v-if="id" apiUrl="`/api/tweet/${id}`" />
 ```
 
 Or if the tweet component already knows about the endpoint it needs to use, you can use `id` instead:
 
-```tsx copy
-<Tweet id={id} />
+```vue copy
+<Tweet :id="id" />
 ```

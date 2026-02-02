@@ -6,7 +6,9 @@ The components used by the Twitter theme allow some simple [customization option
 
 For example, you can build your own tweet component but without the reply button like so:
 
-```tsx filename="my-tweet.tsx" copy
+```vue filename="MyTweet.vue" copy
+<script setup lang="ts">
+import { computed } from 'vue'
 import type { Tweet } from 'vue-better-tweet/api'
 import {
   type TwitterComponents,
@@ -26,70 +28,82 @@ type Props = {
   components?: TwitterComponents
 }
 
-export const MyTweet = ({ tweet: t, components }: Props) => {
-  const tweet = enrichTweet(t)
-  return (
-    <TweetContainer>
-      <TweetHeader tweet={tweet} components={components} />
-      {tweet.in_reply_to_status_id_str && <TweetInReplyTo tweet={tweet} />}
-      <TweetBody tweet={tweet} />
-      {tweet.mediaDetails?.length ? (
-        <TweetMedia tweet={tweet} components={components} />
-      ) : null}
-      {tweet.quoted_tweet && <QuotedTweet tweet={tweet.quoted_tweet} />}
-      <TweetInfo tweet={tweet} />
-      <TweetActions tweet={tweet} />
-      {/* We're not including the `TweetReplies` component that adds the reply button */}
-    </TweetContainer>
-  )
-}
+const props = defineProps<Props>()
+const tweet = computed(() => enrichTweet(props.tweet))
+</script>
+
+<template>
+  <TweetContainer>
+    <TweetHeader :tweet="tweet" :components="props.components" />
+    <TweetInReplyTo v-if="tweet.in_reply_to_status_id_str" :tweet="tweet" />
+    <TweetBody :tweet="tweet" />
+    <TweetMedia
+      v-if="tweet.mediaDetails?.length"
+      :tweet="tweet"
+      :components="props.components"
+    />
+    <QuotedTweet v-if="tweet.quoted_tweet" :tweet="tweet.quoted_tweet" />
+    <TweetInfo :tweet="tweet" />
+    <TweetActions :tweet="tweet" />
+    <!-- We're not including the `TweetReplies` component that adds the reply button -->
+  </TweetContainer>
+</template>
 ```
 
 Then, you can build your own `Tweet` component that uses the `MyTweet` component:
 
-```tsx filename="tweet.tsx" copy
-import { Suspense } from 'react'
+```vue filename="Tweet.vue" copy
+<script setup lang="ts">
+import { onServerPrefetch, ref } from 'vue'
 import { getTweet } from 'vue-better-tweet/api'
 import { type TweetProps, TweetNotFound, TweetSkeleton } from 'vue-better-tweet'
-import { MyTweet } from './my-tweet'
+import MyTweet from './MyTweet.vue'
 
-const TweetContent = async ({ id, components, onError }: TweetProps) => {
-  const tweet = id
-    ? await getTweet(id).catch((err) => {
-        if (onError) {
-          onError(err)
-        } else {
-          console.error(err)
-        }
-      })
-    : undefined
+const props = withDefaults(defineProps<TweetProps>(), {
+  fallback: () => TweetSkeleton,
+})
 
-  if (!tweet) {
-    const NotFound = components?.TweetNotFound || TweetNotFound
-    return <NotFound />
+const tweet = ref()
+const error = ref<unknown>()
+
+onServerPrefetch(async () => {
+  if (!props.id) return
+  try {
+    tweet.value = await getTweet(props.id)
+  } catch (err) {
+    error.value = err
+    if (props.onError) {
+      props.onError(err)
+    } else {
+      console.error(err)
+    }
   }
+})
+</script>
 
-  return <MyTweet tweet={tweet} components={components} />
-}
-
-export const Tweet = ({
-  fallback = <TweetSkeleton />,
-  ...props
-}: TweetProps) => (
-  <Suspense fallback={fallback}>
-    {/* @ts-ignore: Async components are valid in the app directory */}
-    <TweetContent {...props} />
+<template>
+  <Suspense>
+    <template #default>
+      <component
+        :is="props.components?.TweetNotFound || TweetNotFound"
+        v-if="!tweet"
+      />
+      <MyTweet v-else :tweet="tweet" :components="props.components" />
+    </template>
+    <template #fallback>
+      <component :is="props.fallback" />
+    </template>
   </Suspense>
-)
+</template>
 ```
 
-The `Tweet` component uses `Suspense` to progressively load the tweet (non-blocking rendering) and to opt-in into streaming if your framework supports it, like Next.js.
+The `Tweet` component uses `Suspense` to progressively load the tweet (non-blocking rendering) and to opt-in into streaming if your framework supports it, like Nuxt.
 
-`TweetContent` is an async component that fetches the tweet and passes it to `MyTweet`. `async` only works for [React Server Components (RSC)](https://react.dev/blog/2023/03/22/react-labs-what-we-have-been-working-on-march-2023#react-server-components) so if your framework does not support RSC you can use [SWR](https://swr.vercel.app/) instead:
+If your framework does not support server components or async component setup for server rendering, you can use [SWRV](https://docs-swrv.netlify.app/) instead:
 
-```tsx filename="tweet.tsx" copy
-'use client'
-
+```vue filename="Tweet.client.vue" copy
+<script setup lang="ts">
+import { computed } from 'vue'
 import {
   type TweetProps,
   EmbeddedTweet,
@@ -98,21 +112,23 @@ import {
   useTweet,
 } from 'vue-better-tweet'
 
-export const Tweet = ({
-  id,
-  apiUrl,
-  fallback = <TweetSkeleton />,
-  components,
-  onError,
-}: TweetProps) => {
-  const { data, error, isLoading } = useTweet(id, apiUrl)
+const props = withDefaults(defineProps<TweetProps>(), {
+  fallback: () => TweetSkeleton,
+})
 
-  if (isLoading) return fallback
-  if (error || !data) {
-    const NotFound = components?.TweetNotFound || TweetNotFound
-    return <NotFound error={onError ? onError(error) : error} />
-  }
+const { data, error, isLoading } = useTweet(props.id, props.apiUrl)
+const notFound = computed(
+  () => (props.components?.TweetNotFound || TweetNotFound),
+)
+</script>
 
-  return <EmbeddedTweet tweet={data} components={components} />
-}
+<template>
+  <component :is="props.fallback" v-if="isLoading" />
+  <component
+    :is="notFound"
+    v-else-if="error || !data"
+    :error="props.onError ? props.onError(error) : error"
+  />
+  <EmbeddedTweet v-else :tweet="data" :components="props.components" />
+</template>
 ```

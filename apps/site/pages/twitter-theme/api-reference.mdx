@@ -2,12 +2,12 @@
 
 ### `Tweet`
 
-```tsx copy
+```ts copy
 import { Tweet } from 'vue-better-tweet'
 ```
 
-```tsx copy
-<Tweet id="1629307668568633344">
+```vue copy
+<Tweet id="1629307668568633344" />
 ```
 
 Fetches and renders the tweet. It accepts the following props:
@@ -31,35 +31,34 @@ We highly recommend adding your own API route to fetch the tweet in production (
 
 Here's a good example of how to setup your own API route:
 
-```ts filename="api/tweet/[tweet].ts" copy
-import type { VercelRequest, VercelResponse } from '@vercel/node'
+```ts filename="server/api/tweet/[tweet].ts" copy
 import { getTweet } from 'vue-better-tweet/api'
 
-const handler = async (req: VercelRequest, res: VercelResponse) => {
-  const tweetId = req.query.tweet
+export default defineEventHandler(async (event) => {
+  const tweetId = getQuery(event).tweet
 
-  if (req.method !== 'GET' || typeof tweetId !== 'string') {
-    res.status(400).json({ error: 'Bad Request.' })
-    return
+  if (event.method !== 'GET' || typeof tweetId !== 'string') {
+    setResponseStatus(event, 400)
+    return { error: 'Bad Request.' }
   }
 
   try {
     const tweet = await getTweet(tweetId)
-    res.status(tweet ? 200 : 404).json({ data: tweet ?? null })
-  } catch (error) {
+    setResponseStatus(event, tweet ? 200 : 404)
+    return { data: tweet ?? null }
+  } catch (error: any) {
     console.error(error)
-    res.status(400).json({ error: error.message ?? 'Bad request.' })
+    setResponseStatus(event, 400)
+    return { error: error?.message ?? 'Bad request.' }
   }
-}
-
-export default handler
+})
 ```
 
-Something similar can be done with Next.js API Routes or Route Handlers.
+Something similar can be done with Nuxt server routes or Nitro handlers.
 
 ### `EmbeddedTweet`
 
-```tsx copy
+```ts copy
 import { EmbeddedTweet } from 'vue-better-tweet'
 ```
 
@@ -70,7 +69,7 @@ Renders a tweet. It accepts the following props:
 
 ### `TweetSkeleton`
 
-```tsx copy
+```ts copy
 import { TweetSkeleton } from 'vue-better-tweet'
 ```
 
@@ -78,7 +77,7 @@ A tweet skeleton useful for loading states.
 
 ### `TweetNotFound`
 
-```tsx copy
+```ts copy
 import { TweetNotFound } from 'vue-better-tweet'
 ```
 
@@ -92,31 +91,47 @@ Default components used by [`Tweet`](#tweet) and [`EmbeddedTweet`](#embeddedtwee
 
 ```ts copy
 type TwitterComponents = {
-  TweetNotFound?: (props: Props) => JSX.Element
-  AvatarImg?: (props: AvatarImgProps) => JSX.Element
-  MediaImg?: (props: MediaImgProps) => JSX.Element
+  TweetNotFound?: DefineComponent<{ error?: unknown }>
+  AvatarImg?: DefineComponent<AvatarImgProps>
+  MediaImg?: DefineComponent<MediaImgProps>
 }
 ```
 
-For example, to replace the default `img` tag used for the avatar and media with `next/image` you can do the following:
+For example, to replace the default `img` tag used for the avatar and media with `NuxtImg` you can do the following:
 
-```tsx copy
-// tweet-components.tsx
-import Image from 'next/image'
+```ts copy
+// tweet-components.ts
+import { defineComponent, h } from 'vue'
+import { NuxtImg } from '#components'
 import type { TwitterComponents } from 'vue-better-tweet'
 
 export const components: TwitterComponents = {
-  AvatarImg: (props) => <Image {...props} />,
-  MediaImg: (props) => <Image {...props} fill unoptimized />,
+  AvatarImg: defineComponent({
+    inheritAttrs: false,
+    setup(_, { attrs }) {
+      return () => h(NuxtImg, attrs)
+    },
+  }),
+  MediaImg: defineComponent({
+    inheritAttrs: false,
+    setup(_, { attrs }) {
+      return () => h(NuxtImg, { ...attrs, sizes: '100vw' })
+    },
+  }),
 }
 ```
 
 And then pass the components to `Tweet` or `EmbeddedTweet`:
 
-```tsx copy
+```vue copy
+<script setup lang="ts">
+import { Tweet } from 'vue-better-tweet'
 import { components } from './tweet-components'
 
-const MyTweet = ({ id }: { id: string }) => (
-  <Tweet id={id} components={components} />
-)
+defineProps<{ id: string }>()
+</script>
+
+<template>
+  <Tweet :id="id" :components="components" />
+</template>
 ```

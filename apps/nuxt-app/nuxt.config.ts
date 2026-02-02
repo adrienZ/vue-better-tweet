@@ -6,4 +6,7 @@ export default defineNuxtConfig({
     // needed for SSR
     componentIslands: true,
   },
+  build: {
+    transpile: ['vue-better-tweet'],
+  },
 })
