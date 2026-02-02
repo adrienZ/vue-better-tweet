@@ -14,5 +14,8 @@ export default defineNuxtConfig({
   },
   image: {
     domains: ['pbs.twimg.com', 'abs.twimg.com']
-  }
+  },
+  content: {
+    experimental: { sqliteConnector: 'native' },
+  },
 })
