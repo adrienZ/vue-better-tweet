@@ -20,5 +20,9 @@ export default defineNuxtConfig({
     port: 3001,
   },
 
-  modules: ['@nuxt/image'],
+  content: {
+    experimental: { sqliteConnector: 'native' },
+  },
+
+  modules: ['@nuxt/image', '@nuxt/content'],
 })

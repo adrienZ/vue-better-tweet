@@ -170,8 +170,7 @@ The app shows the usage of `vue-better-tweet` in different scenarios:
 
 - [localhost:3001/light/2014481742875521242](http://localhost:3001/light/2014481742875521242) renders the tweet.
 - [localhost:3001/dark/2014481742875521242](http://localhost:3001/dark/2014481742875521242) renders the tweet using SSG/SSR.
-{/* TODO */}
-- [localhost:3001/light/mdx](http://localhost:3001/light/mdx) rendes the tweet in MDX (with the experimental `mdxRs` config enabled).
+- [localhost:3001/light/mdx](http://localhost:3001/light/mdx) rendes the tweet in MDX (with the `@nuxt/content` module).
 {/* Nuxt uses <Suspense> under the hood */}
 {/* - [localhost:3001/light/suspense/2014481742875521242](http://localhost:3001/light/suspense/2014481742875521242) renders the tweet with a custom `Suspense` wrapper. */}
 - [localhost:3001/dark/swr/2014481742875521242](http://localhost:3001/dark/swr/2014481742875521242) uses `apiUrl` to change the API endpoint from which the tweet is fetched in SWR mode.
