@@ -14,6 +14,7 @@ const nextConfig = {
   experimental: {
     mdxRs: true,
   },
+  transpilePackages: ['react-tweet']
 }
 
 export default withMDX(nextConfig)
