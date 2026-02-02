@@ -1,8 +1,8 @@
 import { type MaybeRef, computed, onMounted, shallowRef, toValue } from 'vue'
 import useSWR from 'swrv';
-import { type Tweet, TwitterApiError } from 'react-tweet/api'
+import { type Tweet, TwitterApiError } from './api/index.js'
 
-const host = 'https://react-tweet.vercel.app'
+const host = 'https://vue-better-tweet.vercel.app'
 
 async function fetcher([url, fetchOptions]: [
   string,

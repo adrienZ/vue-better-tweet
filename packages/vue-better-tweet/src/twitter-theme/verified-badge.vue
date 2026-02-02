@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, shallowRef, watchEffect } from 'vue'
-import type { TweetUser } from 'react-tweet/api'
+import type { TweetUser } from '../api/index.js'
 import clsx from 'clsx'
-import { Verified, VerifiedBusiness, VerifiedGovernment } from './icons'
+import { Verified, VerifiedBusiness, VerifiedGovernment } from './icons/index.js'
 import s from './verified-badge.module.css'
 
 type Props = {

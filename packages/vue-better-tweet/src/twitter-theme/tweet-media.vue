@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { EnrichedTweet, EnrichedQuotedTweet } from 'react-tweet'
-import { getMediaUrl } from 'react-tweet'
-import type { MediaDetails } from 'react-tweet/api'
+import type { EnrichedTweet, EnrichedQuotedTweet } from '../utils.js'
+import { getMediaUrl } from '../utils.js'
+import type { MediaDetails } from '../api/index.js'
 import clsx from 'clsx'
 import type { TwitterComponents } from './types'
 import MediaImg from './media-img.vue'

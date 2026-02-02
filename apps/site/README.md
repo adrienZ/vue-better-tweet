@@ -1,6 +1,6 @@
-# react-tweet site
+# vue-better-tweet site
 
-This is documentation site app for `react-tweet`. It uses [Nextra](https://nextra.site).
+This is documentation site app for `vue-better-tweet`. It uses [Nextra](https://nextra.site).
 
 ## Running the app locally
 

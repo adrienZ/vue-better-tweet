@@ -20,7 +20,7 @@ const apiUrl = computed(() => {
   if (!tweetId.value) return undefined
   return import.meta.env.PROD
     ? `/api/tweet/${tweetId.value}`
-    : `https://react-tweet.vercel.app/api/tweet/${tweetId.value}`
+    : `https://vue-better-tweet.vercel.app/api/tweet/${tweetId.value}`
 })
 
 const { data, error, isLoading } = useTweet(tweetId, apiUrl)

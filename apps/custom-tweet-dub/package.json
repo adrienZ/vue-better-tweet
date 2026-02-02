@@ -1,0 +1,34 @@
+{
+  "name": "custom-tweet-dub",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "repository": "https://github.com/adrienZ/vue-better-tweet.git",
+  "author": "Luis Alvarez (https://twitter.com/luis_fades)",
+  "scripts": {
+    "dev": "nuxt dev -p 3005",
+    "build": "nuxt build",
+    "start": "nuxt preview -p 3005",
+    "lint": "eslint .",
+    "postinstall": "nuxt prepare",
+    "clean": "rm -rf .nuxt && rm -rf .output && rm -rf .turbo"
+  },
+  "dependencies": {
+    "@nuxt/content": "3.11.0",
+    "@nuxt/image": "2.0.0",
+    "nuxt": "^4.3.0",
+    "vue": "^3.5.27",
+    "vue-better-tweet": "workspace:*",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "1.13.0",
+    "@tailwindcss/vite": "^4.1.0",
+    "@types/node": "24.5.2",
+    "better-sqlite3": "^12.6.2",
+    "eslint": "^9.39.2",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.9.2"
+  },
+  "version": null
+}

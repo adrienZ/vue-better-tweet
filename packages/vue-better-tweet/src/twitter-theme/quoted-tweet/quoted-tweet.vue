@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { EnrichedQuotedTweet } from 'react-tweet'
+import type { EnrichedQuotedTweet } from '../../utils.js'
 import type { TwitterComponents } from '../types'
 import QuotedTweetContainer from './quoted-tweet-container.vue'
 import QuotedTweetHeader from './quoted-tweet-header.vue'

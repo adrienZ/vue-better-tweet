@@ -1,8 +1,8 @@
 {
-  "repository": "https://github.com/vercel/react-tweet.git",
+  "repository": "https://github.com/adrienZ/vue-better-tweet.git",
   "license": "MIT",
   "private": true,
-  "author": "Luis Alvarez (https://twitter.com/luis_fades)",
+  "author": "Adrien Zaganelli (https://twitter.com/adri_zag)",
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",

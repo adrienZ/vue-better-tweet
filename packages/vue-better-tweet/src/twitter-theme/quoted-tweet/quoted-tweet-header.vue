@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { EnrichedQuotedTweet } from 'react-tweet'
+import type { EnrichedQuotedTweet } from '../../utils.js'
 import clsx from 'clsx'
 import type { TwitterComponents } from '../types'
 import AvatarImg from '../avatar-img.vue'

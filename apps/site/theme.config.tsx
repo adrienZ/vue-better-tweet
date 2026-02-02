@@ -2,10 +2,10 @@ import React from 'react'
 import { DocsThemeConfig, useConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
-  logo: <span>react-tweet</span>,
+  logo: <span>vue-better-tweet</span>,
   useNextSeoProps() {
     return {
-      titleTemplate: '%s – react-tweet',
+      titleTemplate: '%s – vue-better-tweet',
     }
   },
   head: function useHead() {
@@ -26,20 +26,20 @@ const config: DocsThemeConfig = {
           content="Embed tweets in your React application."
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site:domain" content="react-tweet.vercel.app" />
-        <meta name="twitter:url" content="https://react-tweet.vercel.app" />
+        <meta name="twitter:site:domain" content="vue-better-tweet.vercel.app" />
+        <meta name="twitter:url" content="https://vue-better-tweet.vercel.app" />
         <meta
           name="og:title"
-          content={title ? title + ' – react-tweet' : 'react-tweet'}
+          content={title ? title + ' – vue-better-tweet' : 'vue-better-tweet'}
         />
-        <meta name="apple-mobile-web-app-title" content="react-tweet" />
+        <meta name="apple-mobile-web-app-title" content="vue-better-tweet" />
       </>
     )
   },
   project: {
-    link: 'https://github.com/vercel/react-tweet',
+    link: 'https://github.com/adrienZ/vue-better-tweet',
   },
-  docsRepositoryBase: 'https://github.com/vercel/react-tweet',
+  docsRepositoryBase: 'https://github.com/adrienZ/vue-better-tweet',
   editLink: {
     text: 'Edit this page on GitHub →',
   },
@@ -52,7 +52,7 @@ const config: DocsThemeConfig = {
             target="_blank"
             rel="noopener noreferrer"
             title="vercel.com homepage"
-            href="https://vercel.com?utm_source=react-tweet.site"
+            href="https://vercel.com?utm_source=vue-better-tweet.site"
           >
             <span>Powered by</span>
             <svg height={20} viewBox="0 0 283 64" fill="none">

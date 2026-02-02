@@ -25,7 +25,6 @@
     ".": "./dist/index.client.js",
     "./server": "./dist/index.js",
     "./api": "./dist/api.js",
-    "./swr": "./dist/swr.js",
     "./theme.css": "./dist/twitter-theme/theme.css"
   },
   "files": [
@@ -67,7 +66,6 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "react-tweet": "^3.3.0",
     "swrv": "^1.1.0",
     "vue": "^3.4.0"
   },
@@ -83,6 +81,7 @@
     "swr": "^2.3.8",
     "typescript": "^5.9.3",
     "vite": "^7.1.6",
+    "vite-plugin-lib-inject-css": "^2.2.2",
     "vue-tsc": "^3.2.4"
   }
 }

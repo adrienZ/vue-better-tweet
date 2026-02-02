@@ -1,52 +1,40 @@
-import path, { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-
-const __dirname = dirname(fileURLToPath(import.meta.url))
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import { libInjectCss } from "vite-plugin-lib-inject-css";
+import { resolve } from "node:path";
 
 const entries = {
-  index: resolve(__dirname, 'src/index.ts'),
-  "index.client": resolve(__dirname, 'src/index.client.ts'),
-  api: resolve(__dirname, 'src/api.ts'),
-  swr: resolve(__dirname, 'src/swr.vue'),
-  'twitter-theme/theme': resolve(__dirname, 'src/twitter-theme/theme.css')
-}
+  index: resolve(__dirname, "src/index.ts"),
+  "index.client": resolve(__dirname, "src/index.client.ts"),
+  api: resolve(__dirname, "src/api/index.ts"),
+};
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    libInjectCss(),
+  ],
   build: {
     // Avoid minified JS var collisions in CSS module output when bundled by other tools.
     minify: false,
     sourcemap: true,
-    outDir: 'dist',
+    outDir: "dist",
     cssCodeSplit: true,
     lib: {
       entry: entries,
-      formats: ['es'],
+      formats: ["es"],
       name: 'vue-better-tweet',
     },
     rollupOptions: {
-      external: ['vue', 'react-tweet', 'swrv', 'clsx'],
+      external: ["vue", "clsx", "swrv"],
       output: {
+        // preserve to mach swc behavior fromm original react project
         preserveModules: true,
-        preserveModulesRoot: 'src',
-        entryFileNames: '[name].js',
-        chunkFileNames: '[name].js',
-        assetFileNames: (assetInfo) => {
-          const original = assetInfo.originalFileName
-          if (!original) {
-            return 'assets/[name][extname]'
-          }
-
-          const relative = path.relative(__dirname, original)
-          if (!relative.startsWith('..')) {
-            return relative.replace(/^src[\\/]/, '')
-          }
-
-          return 'assets/[name][extname]'
-        }
-      }
-    }
-  }
-})
+        preserveModulesRoot: "src",
+        entryFileNames: "[name].js",
+        chunkFileNames: "chunks/[name]-[hash].js",
+        assetFileNames: "assets/[name]-[hash][extname]",
+      },
+    },
+  },
+});

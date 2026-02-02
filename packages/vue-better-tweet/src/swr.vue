@@ -22,8 +22,8 @@ import {
   TweetSkeleton,
   type TwitterComponents,
 } from "./twitter-theme/components";
-import type { TweetCoreProps } from "react-tweet";
-import { useTweet } from "./hooks";
+import type { TweetCoreProps } from "./utils.js";
+import { useTweet } from "./hooks.js";
 
 const props = defineProps<TweetProps>();
 
