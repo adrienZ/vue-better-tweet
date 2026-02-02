@@ -2,7 +2,7 @@
 
 `vue-better-tweet` allows you to embed tweets in your Vue application when using Nuxt, Vite, and more. This library does not require using the Twitter API. Tweets can be rendered statically, preventing the need to include an iframe and additional client-side JavaScript.
 
-You can see how it in action in [vue-better-tweet-nuxt-app.vercel.app/light/1629307668568633344](https://vue-better-tweet-nuxt-app.vercel.app/light/1629307668568633344). Replace the tweet ID in the URL to see other tweets.
+You can see how it in action in [vue-better-tweet-nuxt-app.vercel.app/light/2014481742875521242](https://vue-better-tweet-nuxt-app.vercel.app/light/2014481742875521242). Replace the tweet ID in the URL to see other tweets.
 
 This library is fully compatible with Nuxt Server Components. [Learn more](https://nuxt.com/docs/4.x/directory-structure/app/components#server-components).
 
@@ -39,7 +39,7 @@ The closest `data-theme` attribute on a parent element can determine the theme o
 
 ```tsx
 <div data-theme="dark">
-  <Tweet id="1629307668568633344" />
+  <Tweet id="2014481742875521242" />
 </div>
 ```
 
@@ -47,7 +47,7 @@ Alternatively, a parent with the class `light` or `dark` will also work:
 
 ```tsx
 <div className="dark">
-  <Tweet id="1629307668568633344" />
+  <Tweet id="2014481742875521242" />
 </div>
 ```
 
@@ -83,14 +83,14 @@ export default defineEventHandler(async (event) => {
   const cacheKey = `tweet:${id}`
 
   const cachedTweet = await storage.getItem(cacheKey)
-  if (cachedTweet) return cachedTweet
+  if (cachedTweet) return { data: cachedTweet}
 
   try {
     const { data, tombstone, notFound } = await fetchTweet(id)
 
     if (data) {
       await storage.setItem(cacheKey, data)
-      return data
+      return { data }
     }
 
     if (tombstone || notFound) {
@@ -131,4 +131,4 @@ const { data, error } = await useAsyncData(
 </template>
 ```
 
-You can see it working at [vue-better-tweet-nuxt-app.vercel.app/light/kv/1629307668568633344](https://vue-better-tweet-nuxt-app.vercel.app/light/kv/1629307668568633344) ([source](https://github.com/adrienZ/vue-better-tweet/blob/main/apps/nuxt-app/server/api/tweet/%id%5D.ts)).
+You can see it working at [vue-better-tweet-nuxt-app.vercel.app/light/kv/2014481742875521242](https://vue-better-tweet-nuxt-app.vercel.app/light/kv/2014481742875521242) ([source](https://github.com/adrienZ/vue-better-tweet/blob/main/apps/nuxt-app/server/api/tweet/%id%5D.ts)).

@@ -9,15 +9,15 @@ const tweetId = computed(() => {
   return Array.isArray(value) ? value[0] : value
 })
 
-const { data, error } = await useAsyncData(
+const { data: tweet, error } = await useAsyncData(
   () => `tweet-${tweetId.value}`,
-  () => $fetch(`/api/tweet/${tweetId.value}`)
+  () => $fetch(`/api/tweet/kv/${tweetId.value}`)
 )
 </script>
 
 <template>
   <TweetPage theme="light">
-    <TweetNotFound v-if="error || !data" :error="error" />
-    <EmbeddedTweet v-else :tweet="data" />
+    <TweetNotFound v-if="error || !tweet" :error="error" />
+    <EmbeddedTweet v-else :tweet="tweet.data" />
   </TweetPage>
 </template>

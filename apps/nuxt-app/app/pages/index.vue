@@ -7,11 +7,15 @@ import { Tweet as ClientTweet } from 'vue-better-tweet'
     <h1 class="title">vue-better-tweet Nuxt demo</h1>
 
     <p class="demo-links">
-      <NuxtLink to="/dark/1628832338187636740">Dark demo</NuxtLink>
+      <NuxtLink to="/dark/1990838999095693399">SSR demo</NuxtLink>
       <span class="divider">•</span>
-      <NuxtLink to="/light/1628832338187636740">Light demo</NuxtLink>
+      <NuxtLink to="/dark/swr/1990838999095693399">custom api url demo</NuxtLink>
       <span class="divider">•</span>
-      <NuxtLink to="/light/kv/1628832338187636740">KV demo</NuxtLink>
+      <NuxtLink to="/light/1990838999095693399">custom components demo</NuxtLink>
+      <span class="divider">•</span>
+      <NuxtLink to="/light/kv/1990838999095693399">KV demo</NuxtLink>
+      <span class="divider">•</span>
+      <NuxtLink to="/light/cache/1990838999095693399">cache demo</NuxtLink>
     </p>
 
     <div class="tweet-grid">
@@ -23,7 +27,7 @@ import { Tweet as ClientTweet } from 'vue-better-tweet'
       <section class="tweet-panel">
         <h3 class="tweet-label">Rendered on the client (check network tab)</h3>
         <ClientOnly>
-          <ClientTweet id="1628832338187636740" />
+          <ClientTweet id="1990838999095693399" />
         </ClientOnly>
       </section>
     </div>

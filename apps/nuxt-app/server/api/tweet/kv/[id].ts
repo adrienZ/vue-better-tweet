@@ -11,14 +11,14 @@ export default defineEventHandler(async (event) => {
   const cacheKey = `tweet:${id}`
 
   const cachedTweet = await storage.getItem(cacheKey)
-  if (cachedTweet) return cachedTweet
+  if (cachedTweet) return { data: cachedTweet}
 
   try {
     const { data, tombstone, notFound } = await fetchTweet(id)
 
     if (data) {
       await storage.setItem(cacheKey, data)
-      return data
+      return { data }
     }
 
     if (tombstone || notFound) {

@@ -7,12 +7,12 @@ import { Tweet } from 'vue-better-tweet'
 ```
 
 ```vue copy
-<Tweet id="1629307668568633344" />
+<Tweet id="2014481742875521242" />
 ```
 
 Fetches and renders the tweet. It accepts the following props:
 
-- **id** - `string`: the tweet ID. For example in `https://twitter.com/chibicode/status/1629307668568633344` the tweet ID is `1629307668568633344`. This is the only required prop.
+- **id** - `string`: the tweet ID. For example in `https://twitter.com/chibicode/status/2014481742875521242` the tweet ID is `2014481742875521242`. This is the only required prop.
 - **apiUrl** - `string`: the API URL to fetch the tweet from when using the tweet client-side with SWR. Defaults to `https://vue-better-tweet.vercel.app/api/tweet/:id`.
 - **fallback** - `Slot`: The fallback component to render while the tweet is loading. Defaults to `TweetSkeleton`.
 - **onError** - `(error?: any) => any`: The returned error will be sent to the `TweetNotFound` component.
@@ -108,13 +108,13 @@ export const components: TwitterComponents = {
   AvatarImg: defineComponent({
     inheritAttrs: false,
     setup(_, { attrs }) {
-      return () => h(NuxtImg, attrs)
+      return () => h(NuxtImg, {...attrs, quality: 20 })
     },
   }),
   MediaImg: defineComponent({
     inheritAttrs: false,
     setup(_, { attrs }) {
-      return () => h(NuxtImg, { ...attrs, sizes: '100vw' })
+      return () => h(NuxtImg, { ...attrs, quality: 10, sizes: "100px" })
     },
   }),
 }

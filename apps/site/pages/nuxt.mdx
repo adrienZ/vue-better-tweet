@@ -24,7 +24,7 @@ You can learn more about `Tweet` in the [Twitter theme docs](/twitter-theme). An
 
 ### Troubleshooting
 
-If you see an error saying that CSS can't be imported from `node_modules` in the `pages` directory. Add the following config to `nuxt.config.js`:
+If you see an error saying that CSS can't be imported from `node_modules` in the `pages` directory. Add the following config to `nuxt.config.ts`:
 
 ```js copy
 build: {
@@ -36,38 +36,37 @@ build: {
 
 It's recommended to enable cache for the Twitter API if you intend to go to production. This is how you can do it with [`defineCachedFunction`](https://nitro.build/guide/cache#cached-functions):
 
-```vue
-<script setup lang="ts">
-import { defineCachedFunction } from 'nitro/cache'
-import { getTweet as _getTweet } from 'vue-better-tweet/api'
+```ts copy filename="api/tweet/cache/[id].ts"
+import { getTweet } from 'vue-better-tweet/api'
 
-const route = useRoute()
-const id = String(route.params.tweet)
+export default defineCachedEventHandler(async (event) => {
+  const id = getRouterParam(event, 'id')
 
-const getTweet = import.meta.server
-  ? defineCachedFunction(
-      async (id: string) => {
-        return await _getTweet(id)
-      },
-      {
-        name: 'tweet',
-        maxAge: 3600 * 24
-        getKey: (id: string) => id,
-      }
-    )
-  : (async () => null) // client side fallback
+  if (!id) {
+    throw createError("Missing id")
+  }
 
-const { data: tweet, error, pending } = await useAsyncData(
-  `tweet-${id}`,
-  () => getTweet(id),
+  return await getTweet(id);
+}, { maxAge: 3600 * 24 });
+```
+
+```vue copy filename="pages/tweet/[tweet].vue"
+<script setup lang="ts"> 
+import { TweetNotFound, EmbeddedTweet } from "vue-better-tweet"
+
+const route = useRoute();
+const tweetId = computed(() => route.params.tweet)
+
+const { data: tweet, error } = await useAsyncData(
+  `tweet-${tweetId}`,
+  () => $fetch(`api/tweet/cache/${tweetId.value}`),
   { server: true }
 )
 </script>
 
 <template>
   <div>
-    <TweetSkeleton v-if="pending" />
-    <TweetNotFound v-else-if="error || !tweet" />
+    <TweetNotFound v-if="error || !tweet" />
     <EmbeddedTweet v-else :tweet="tweet" />
   </div>
 </template>
@@ -131,13 +130,13 @@ export const components: TwitterComponents = {
   AvatarImg: defineComponent({
     inheritAttrs: false,
     setup(_, { attrs }) {
-      return () => h(NuxtImg, attrs)
+      return () => h(NuxtImg, {...attrs, quality: 20 })
     },
   }),
   MediaImg: defineComponent({
     inheritAttrs: false,
     setup(_, { attrs }) {
-      return () => h(NuxtImg, { ...attrs, sizes: '100vw' })
+      return () => h(NuxtImg, { ...attrs, quality: 10, sizes: "100px" })
     },
   }),
 }
@@ -169,12 +168,13 @@ The app will be up and running at http://localhost:3001 for the [Nuxt app exampl
 
 The app shows the usage of `vue-better-tweet` in different scenarios:
 
-- [localhost:3001/light/1629307668568633344](http://localhost:3001/light/1629307668568633344) renders the tweet in the app router.
-- [localhost:3001/dark/1629307668568633344](http://localhost:3001/dark/1629307668568633344) renders the tweet using SSG in the pages directory.
+- [localhost:3001/light/2014481742875521242](http://localhost:3001/light/2014481742875521242) renders the tweet.
+- [localhost:3001/dark/2014481742875521242](http://localhost:3001/dark/2014481742875521242) renders the tweet using SSG/SSR.
 - [localhost:3001/light/mdx](http://localhost:3001/light/mdx) rendes the tweet in MDX (with the experimental `mdxRs` config enabled).
-- [localhost:3001/light/suspense/1629307668568633344](http://localhost:3001/light/suspense/1629307668568633344) renders the tweet with a custom `Suspense` wrapper.
-- [localhost:3001/dark/swr/1629307668568633344](http://localhost:3001/dark/swr/1629307668568633344) uses `apiUrl` to change the API endpoint from which the tweet is fetched in SWR mode.
-- [localhost:3001/light/cache/1629307668568633344](http://localhost:3001/light/suspense/1629307668568633344) renders the tweet while caching the tweet data with [`unstable_cache`](https://nextjs.org/docs/app/api-reference/functions/unstable_cache).
-- [localhost:3001/light/vercel-kv/1629307668568633344](http://localhost:3001/light/suspense/1629307668568633344) renders the tweet while caching the tweet data with [Vercel KV](https://vercel.com/docs/storage/vercel-kv).
+{/* Nuxt uses <Suspense> under the hood */}
+{/* - [localhost:3001/light/suspense/2014481742875521242](http://localhost:3001/light/suspense/2014481742875521242) renders the tweet with a custom `Suspense` wrapper. */}
+- [localhost:3001/dark/swr/2014481742875521242](http://localhost:3001/dark/swr/2014481742875521242) uses `apiUrl` to change the API endpoint from which the tweet is fetched in SWR mode.
+- [localhost:3001/light/cache/2014481742875521242](http://localhost:3001/light/cache/2014481742875521242) renders the tweet while caching the tweet data with [`defineCachedFunction`](https://nitro.build/guide/cache#cached-functions).
+- [localhost:3001/light/kv/2014481742875521242](http://localhost:3001/light/kv/2014481742875521242) renders the tweet while caching the tweet data with [Unstorage](https://unstorage.unjs.io/guide).
 
 The source code for `vue-better-tweet` is imported from [packages/vue-better-tweet](https://github.com/adrienZ/vue-better-tweet/tree/main/packages/vue-better-tweet) and any changes you make to it will be reflected in the app immediately.
