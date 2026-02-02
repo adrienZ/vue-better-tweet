@@ -2,7 +2,7 @@
 
 `vue-better-tweet` allows you to embed tweets in your Vue application when using Nuxt, Vite, and more.
 
-For documentation visit [react-tweet.vercel.app](https://vue-better-tweet.vercel.app).
+For documentation visit [vue-better-tweet.vercel.app](https://vue-better-tweet.vercel.app).
 
 ## Contributing
 
