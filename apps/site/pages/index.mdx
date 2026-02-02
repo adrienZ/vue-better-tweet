@@ -67,7 +67,7 @@ For Global CSS the usage of `:global` is not necessary.
 
 Rendering tweets requires making a call to Twitter's syndication API. Getting rate limited by that API is very hard but it's possible if you're relying only on the endpoint we provide for SWR (`vue-better-tweet.vercel.app/api/tweet/:id`) as the IPs of the server are making many requests to the syndication API. This also applies to RSC where the API endpoint is not required but the server is still making the request from the same IP.
 
-To prevent this, you can use a db like Redis or [Vercel KV](https://vercel.com/docs/storage/vercel-kv) to cache the tweets. For example using [Vercel KV](https://vercel.com/docs/storage/vercel-kv):
+To prevent this, you can use a db like Redis or [Vercel KV](https://vercel.com/docs/storage/vercel-kv) to cache the tweets. For example using [Unstorage](https://unstorage.unjs.io/guide):
 
 ```ts filename="server/api/tweet/[id].ts"
 import { fetchTweet, type Tweet } from 'vue-better-tweet/api'
@@ -131,4 +131,4 @@ const { data, error } = await useAsyncData(
 </template>
 ```
 
-You can see it working at [vue-better-tweet-next.vercel.app/light/kv/1629307668568633344](https://vue-better-tweet-nuxt-app.vercel.app/light/kv/1629307668568633344) ([source](https://github.com/adrienZ/vue-better-tweet/blob/main/apps/nuxt-app/server/api/tweet/%id%5D.ts)).
+You can see it working at [vue-better-tweet-nuxt-app.vercel.app/light/kv/1629307668568633344](https://vue-better-tweet-nuxt-app.vercel.app/light/kv/1629307668568633344) ([source](https://github.com/adrienZ/vue-better-tweet/blob/main/apps/nuxt-app/server/api/tweet/%id%5D.ts)).
