@@ -4,6 +4,14 @@
 
 Follow the [installation docs in the Introduction](/#installation).
 
+Add the following config to `nuxt.config.ts`:
+
+```js copy
+build: {
+  transpile: ['vue-better-tweet'],
+},
+```
+
 ## Usage
 
 In any component, import `Tweet` from `vue-better-tweet` and use it like so:
@@ -22,14 +30,29 @@ import { Tweet } from 'vue-better-tweet'
 
 You can learn more about `Tweet` in the [Twitter theme docs](/twitter-theme). And you can learn more about the usage in [Running the test app](#running-the-test-app).
 
-### Troubleshooting
 
-If you see an error saying that CSS can't be imported from `node_modules` in the `pages` directory. Add the following config to `nuxt.config.ts`:
+### SSR only usage
 
-```js copy
-build: {
-  transpile: ['vue-better-tweet'],
-},
+Create a new file
+
+```vue copy filename="app/components/TweetSSR.server.vue"
+<script setup lang="ts">
+import { Tweet } from "vue-better-tweet/server"
+
+defineProps<{ id: string }>()
+</script>
+
+<template>
+  <Tweet :id="id">
+</template>
+```
+
+Use this component in you app
+
+```vue copy filename="/app/pages/index.vue"
+<template>
+  <TweetSSR id="1683920951807971329">
+</template>
 ```
 
 ### Enabling cache
