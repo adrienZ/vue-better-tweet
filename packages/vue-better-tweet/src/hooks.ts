@@ -1,6 +1,9 @@
 import { type MaybeRef, computed, onMounted, shallowRef, toValue } from 'vue'
-import useSWR from 'swrv';
+import swrv from 'swrv';
 import { type Tweet, TwitterApiError } from './api/index.js'
+
+// ESM/CJS interop: in native ESM, swrv's default export is on `.default`.
+const useSWR = (swrv as unknown as { default?: typeof swrv }).default ?? swrv;
 
 const host = 'https://vue-better-tweet.vercel.app'
 
