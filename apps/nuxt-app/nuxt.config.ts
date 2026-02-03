@@ -24,5 +24,5 @@ export default defineNuxtConfig({
     experimental: { sqliteConnector: 'native' },
   },
 
-  modules: ['@nuxt/image', '@nuxt/content'],
+  modules: ['@nuxt/image', '@nuxt/content', 'nuxt-umami'],
 })
